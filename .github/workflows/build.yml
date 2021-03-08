@@ -275,6 +275,7 @@ jobs:
 
   upload releases:
     needs: [build for K2P, build for R3G]
+    runs-on: ubuntu-18.04
     container:
       volumes:
         - /artifacts:/artifacts
