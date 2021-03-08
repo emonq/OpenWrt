@@ -265,7 +265,7 @@ jobs:
           echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
           echo "::set-output name=url::$(cat wetransfer.log | grep https | cut -f3 -d" ")"
 
-  upload releases:
+  upload_releases:
     needs: [build_for_K2P, build_for_R3G]
     runs-on: ubuntu-18.04
     steps:
