@@ -169,7 +169,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
+        tag_name: ${{ env.DEVICE_NAME }}
+        name: ${{ env.FILE_DATE }}
         body_path: release.txt
         files: ${{ env.FIRMWARE }}/*
 
