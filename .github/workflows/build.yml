@@ -23,7 +23,7 @@ env:
   TZ: Asia/Shanghai
 
 jobs:
-  build for K2P:
+  build_for_K2P:
     runs-on: ubuntu-18.04
     container:
       volumes:
@@ -148,7 +148,7 @@ jobs:
           echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
           echo "::set-output name=url::$(cat wetransfer.log | grep https | cut -f3 -d" ")"
 
-  build for R3G:
+  build_for_R3G:
     runs-on: ubuntu-18.04
     container:
       volumes:
@@ -274,7 +274,7 @@ jobs:
           echo "::set-output name=url::$(cat wetransfer.log | grep https | cut -f3 -d" ")"
 
   upload releases:
-    needs: [build for K2P, build for R3G]
+    needs: [build_for_K2P, build_for_R3G]
     runs-on: ubuntu-18.04
     container:
       volumes:
