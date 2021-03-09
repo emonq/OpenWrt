@@ -123,8 +123,10 @@ jobs:
         uses: actions/upload-artifact@main
         if: steps.organize.outputs.status == 'success' && !cancelled()
         with:
-          name: artifacts/OpenWrt_firmware_${{ env.DEVICE_NAME }}
-          path: ${{ env.FIRMWARE }}
+          name: OpenWrt_firmware_${{ env.DEVICE_NAME }}
+          path: |
+            ${{ env.FIRMWARE }}
+            !${{ env.FIRMWARE }}/*.txt
 
       - name: Upload firmware to cowtransfer
         id: cowtransfer
@@ -244,8 +246,10 @@ jobs:
         uses: actions/upload-artifact@main
         if: steps.organize.outputs.status == 'success' && !cancelled()
         with:
-          name: artifacts/OpenWrt_firmware_${{ env.DEVICE_NAME }}
-          path: ${{ env.FIRMWARE }}
+          name: OpenWrt_firmware_${{ env.DEVICE_NAME }}
+          path: |
+            ${{ env.FIRMWARE }}
+            !${{ env.FIRMWARE }}/*.txt
 
       - name: Upload firmware to cowtransfer
         id: cowtransfer
@@ -269,9 +273,8 @@ jobs:
     needs: [build_for_K2P, build_for_R3G]
     runs-on: ubuntu-18.04
     steps:
-      - uses: actions/download-artifact@v2
-        with:
-          name: artifacts
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
 
       - name: Generate release tag
         id: tag
