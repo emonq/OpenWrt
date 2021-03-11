@@ -1,6 +1,7 @@
 name: Build OpenWrt
 
 on:
+  push:
   repository_dispatch:
   workflow_dispatch:
     inputs:
@@ -293,7 +294,11 @@ jobs:
           touch release.txt
           [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
           [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
-          echo $(git log --date=format:"%Y-%m-%d %H:%M:%S" --pretty=format:"%ad %an: %s" HEAD -1 --after "$(date -d "1 day ago" +"%F 00:00:00")") >> release.txt
+          git clone $REPO_URL -b $REPO_BRANCH openwrt
+          cd openwrt
+          echo $(git log --date=format:"%Y-%m-%d %H:%M:%S" --pretty=format:"%ad %an: %s" HEAD -1 --after "$(date -d "1 day ago" +"%F 00:00:00")") >> ../release.txt
+          cd ..
+          rm -rf openwrt
           echo "::set-output name=status::success"
           ls -R
 
